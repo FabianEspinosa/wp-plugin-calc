@@ -14,6 +14,11 @@ class CalculatorControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertJsonStringEqualsJsonString('{"result": 5}', $client->getResponse()->getContent());
+
+        $client->request('GET', '/add/a/b');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());
     }
 
     public function testSubtract()
@@ -24,6 +29,11 @@ class CalculatorControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertJsonStringEqualsJsonString('{"result": 3}', $client->getResponse()->getContent());
+
+        $client->request('GET', '/subtract/a/b');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());
     }
 
     public function testMultiply()
@@ -34,6 +44,11 @@ class CalculatorControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertJsonStringEqualsJsonString('{"result": 12}', $client->getResponse()->getContent());
+
+        $client->request('GET', '/multiply/a/b');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());
     }
 
     public function testDivide()
@@ -49,6 +64,11 @@ class CalculatorControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());
+
+        $client->request('GET', '/divide/a/b');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());
     }
 
     public function testExponent()
@@ -59,6 +79,16 @@ class CalculatorControllerTest extends WebTestCase
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertJsonStringEqualsJsonString('{"result": 8}', $client->getResponse()->getContent());
+
+        $client->request('GET', '/exponent/200/200');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());
+
+        $client->request('GET', '/exponent/a/b');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());
     }
 
     public function testPercentage()
@@ -71,6 +101,11 @@ class CalculatorControllerTest extends WebTestCase
         $this->assertJsonStringEqualsJsonString('{"result": 2}', $client->getResponse()->getContent());
 
         $client->request('GET', '/percentage/10/0');
+
+        $this->assertEquals(200, $client->getResponse()->getStatusCode());
+        $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());
+
+        $client->request('GET', '/percentage/a/b');
 
         $this->assertEquals(200, $client->getResponse()->getStatusCode());
         $this->assertJsonStringEqualsJsonString('{"result": "Error"}', $client->getResponse()->getContent());

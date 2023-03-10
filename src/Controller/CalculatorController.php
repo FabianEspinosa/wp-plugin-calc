@@ -12,6 +12,11 @@ class CalculatorController extends AbstractController
     #[Route('/add/{a}/{b}', name: 'calculator_add', methods: ['GET'])]
     public function add(Request $request, $a, $b): JsonResponse
     {
+        if (!is_numeric($a) || !is_numeric($b)) {
+            return new JsonResponse([
+                'result' => 'Error'
+            ]);
+        }
         $result = $a + $b;
 
         return new JsonResponse([
@@ -22,6 +27,11 @@ class CalculatorController extends AbstractController
     #[Route('/subtract/{a}/{b}', name: 'calculator_subtract', methods: ['GET'])]
     public function subtract(Request $request, $a, $b): JsonResponse
     {
+        if (!is_numeric($a) || !is_numeric($b)) {
+            return new JsonResponse([
+                'result' => 'Error'
+            ]);
+        }
         $result = $a - $b;
 
         return new JsonResponse([
@@ -32,6 +42,11 @@ class CalculatorController extends AbstractController
     #[Route('/multiply/{a}/{b}', name: 'calculator_multiply', methods: ['GET'])]
     public function multiply(Request $request, $a, $b): JsonResponse
     {
+        if (!is_numeric($a) || !is_numeric($b)) {
+            return new JsonResponse([
+                'result' => 'Error'
+            ]);
+        }
         $result = $a * $b;
 
         return new JsonResponse([
@@ -42,12 +57,12 @@ class CalculatorController extends AbstractController
     #[Route('/divide/{a}/{b}', name: 'calculator_divide', methods: ['GET'])]
     public function divide(Request $request, $a, $b): JsonResponse
     {
-        if ($b == 0) {
+        if (($b == 0) || (!is_numeric($a) || !is_numeric($b)))  {
             $result = 'Error';
 
-        return new JsonResponse([
-            'result' => $result
-        ]);
+            return new JsonResponse([
+                'result' => $result
+            ]);
         }
 
         $result = $a / $b;
@@ -60,8 +75,13 @@ class CalculatorController extends AbstractController
     #[Route('/exponent/{a}/{b}', name: 'calculator_exponent', methods: ['GET'])]
     public function exponent(Request $request, $a, $b): JsonResponse
     {
-        $result = pow($a, $b);
-
+        if (!is_numeric($a) || !is_numeric($b)) {
+            return new JsonResponse([
+                'result' => 'Error'
+            ]);
+        }
+        $result = pow($a, $b);        
+        $result =  ($result === INF || $result === NAN) ? 'Error' : $result;
         return new JsonResponse([
             'result' => $result
         ]);
@@ -70,6 +90,11 @@ class CalculatorController extends AbstractController
     #[Route('/percentage/{a}/{b}', name: 'calculator_percentage', methods: ['GET'])]
     public function percentage(Request $request, $a, $b): JsonResponse
     {
+        if (!is_numeric($a) || !is_numeric($b)) {
+            return new JsonResponse([
+                'result' => 'Error'
+            ]);
+        }
         if ($b == 0) {
             $result = 'Error';
 

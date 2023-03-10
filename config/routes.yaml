@@ -32,3 +32,8 @@ app_calculator_percentage:
     path: /percentage/{a}/{b}
     controller: App\Controller\CalculatorController::percentage
     methods: ['GET']
+app_default:
+    path: /{any}
+    controller: App\Controller\DefaultController::index
+    requirements:
+        any: '.+'
