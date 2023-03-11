@@ -57,7 +57,7 @@ class CalculatorController extends AbstractController
     #[Route('/divide/{a}/{b}', name: 'calculator_divide', methods: ['GET'])]
     public function divide(Request $request, $a, $b): JsonResponse
     {
-        if (($b == 0) || (!is_numeric($a) || !is_numeric($b)))  {
+        if (!is_numeric($a) || !is_numeric($b) || $b == 0 )  {
             $result = 'Error';
 
             return new JsonResponse([
@@ -66,7 +66,9 @@ class CalculatorController extends AbstractController
         }
 
         $result = $a / $b;
-
+        if (is_float($result) && strlen(substr(strrchr($result, "."), 1)) > 5) {
+            $result = number_format($result, 5, '.', '');
+        }
         return new JsonResponse([
             'result' => $result
         ]);
@@ -103,8 +105,7 @@ class CalculatorController extends AbstractController
             ]);
         }
 
-        $result = ($a * $b) / 100;
-
+        $result = ($a * $b) / 100;        
         return new JsonResponse([
             'result' => $result
         ]);
